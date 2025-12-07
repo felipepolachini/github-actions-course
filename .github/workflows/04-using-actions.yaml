@@ -6,8 +6,6 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps: 
-            - name: Got to folder
-              run: cd github-actions-course
             - name: Checkout Code
               uses: actions/checkout@v4
             - name: Printing Folders
