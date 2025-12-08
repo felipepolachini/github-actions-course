@@ -10,13 +10,13 @@ on:
                 default: false
 env:
     MY_WORKFLOW_VAR: "workflow"
-    MY_OVEWRITEN_VAR: "workflow"
+    MY_OVEWRITTEN_VAR: "workflow"
 jobs:
     echo-data:
         runs-on: ubuntu-latest
         env:
             MY_JOB_VAR: 'job'
-            MY_OVEWRITEN_VAR: 'job'
+            MY_OVEWRITTEN_VAR: 'job'
         steps:
             - name: Display Information
               run: |
@@ -32,8 +32,7 @@ jobs:
                 echo "Variable value: ${{vars.MY_VAR}}"
             - name: Name Print Env VAR
               env:
-                MY_OVEWRITEN_VAR: 'step'
+                MY_OVEWRITTEN_VAR: 'step'
               run: |
                 echo: "Workflow env: ${{env.MY_WORKFLOW_VAR}}"
-                echo: "Overwritten env: ${{env.MY_OVEWRITEN_VAR}}"
-
+                echo: "Overwritten env: ${{env.MY_OVEWRITTEN_VAR}}"
