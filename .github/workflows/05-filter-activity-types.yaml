@@ -1,0 +1,14 @@
+name: 05 filter act types
+
+on:
+    pull_request:
+        types:
+            - opened
+            - synchronize
+        branches:
+            - main
+jobs:
+    echo:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "PR opened and sync and branch main"
