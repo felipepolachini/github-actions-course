@@ -16,22 +16,22 @@ jobs:
                 ${{toJSON(github.event.pull_request.labels)}}  
                 EOF
             - name: bug step
-              if: (${{cancelled() && contains(github.event.pull_request.title,'fix') }} )
+              if: ${{cancelled() && contains(github.event.pull_request.title,'fix') }}
               run: echo "bug fix" 
             - name: sleep 20
               run: sleep 20
             - name: failing step
               run: exit 1
             - name: skipped
-              if: (${{success()}})
+              if: ${{success()}}
               run: echo "print if previous succeed"
             - name: I will execute
-              if: (${{failure()}})
+              if: ${{failure()}}
               run: echo "print if fail"
             - name: I will execute
-              if: (${{!cancelled()}})
+              if: ${{!cancelled()}}
               run: echo "print unless cancelled"
             - name: execute when cancelled
-              if: (${{cancelled()}})
+              if: ${{cancelled()}}
               run: echo "print if cancelled"
              
