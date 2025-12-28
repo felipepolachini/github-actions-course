@@ -36,6 +36,12 @@ jobs:
                 path: 14-artifacts/react-app/build
     deploy:
         runs-on: ubuntu-latest
+        needs: test-build
         steps:
             - name: donwload files
               uses: actions/download-artifacts@v3
+              with: 
+                name: app
+                path: build
+            - name: show folder structure
+              run: ls -R
