@@ -19,4 +19,4 @@ jobs:
               with: 
                 node-version: ${{matrix.node-version}}
             - name: perform some tests
-              run: tests on ${{matrix.os}} and ${{matrix.node-version}}
+              run: echo "tests on ${{matrix.os}} and ${{matrix.node-version}}"
