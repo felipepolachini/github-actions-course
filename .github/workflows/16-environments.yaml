@@ -1,5 +1,6 @@
 name: 16 - environments
-run-name: 16 - environments -${{ inputs.target-env }}
+run-name: 16 - environments | env-${{ inputs.target-env }}
+
 on:
     workflow_dispatch:
         inputs:
