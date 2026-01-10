@@ -1,0 +1,19 @@
+name: 16 - environments
+
+on:
+    workflow_dispatch:
+        inputs:
+            target-env:
+                type: environment
+                default: staging
+
+jobs:
+    echo:
+        runs-on: ubunt-latest
+        environment: ${{ inputs.target-env }}
+        env:
+            my-env-value: ${{ vars.MY_ENV_VALUE || 'default value'}}
+        steps:
+            - name: echo vars
+              run: |
+                echo "env var: ${{ vars.my-env-value }}"
