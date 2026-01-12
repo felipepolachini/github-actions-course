@@ -10,6 +10,10 @@ inputs:
     description: 'Working directory'
     required: false
     default: '.'
+  target-env:
+    description: controls whether dev deps ate installed
+    required: false
+    default: dev
 
 runs:
   using: composite
@@ -25,7 +29,7 @@ runs:
         path: ${{ inputs.working-dir }}/node-modules
         key: node-modules-${{ hashFiles('${{ inputs.working-dir }}/package-lock.json')}}
     - name: install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true' 
       run: npm ci
       shell: bash
       working-directory: ${{ inputs.working-dir }}
