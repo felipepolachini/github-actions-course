@@ -1,6 +1,24 @@
 name: update npm dependencies
 description: update npm dependencies
 
+inputs:
+  base-branch:
+    description: branch used for base dps checks
+    default: main
+    required: false
+  target-branch:
+    description: branch for PR 
+    default: update-dependencies
+    required: false
+  working-directory:
+    description: project directory
+    required: true
+  gh-token:
+    description: auth token
+    required: true
+  debug:
+    description: debug output message
+    default: false
 runs:
   using: node20
   main: index.js
