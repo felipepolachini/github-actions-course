@@ -28,7 +28,7 @@ const setupLogger = ({ debug, prefix } = { debug: false, prefix: '' }) => ({
 
 async function run() {
   const baseBranch = core.getInput('base-branch', { required: true });
-  const targetBranch = core.getInput('head-branch', { required: true });
+  const headBranch = core.getInput('head-branch', { required: true });
   const ghToken = core.getInput('gh-token', { required: true });
   const workingDir = core.getInput('working-directory', { required: true });
   const debug = core.getBooleanInput('debug');
@@ -48,7 +48,7 @@ async function run() {
     return;
   }
 
-  if (!validateBranchName({ branchName: targetBranch })) {
+  if (!validateBranchName({ branchName: headBranch })) {
     core.setFailed(
       'Invalid head-branch name. Branch names should include only characters, numbers, hyphens, underscores, dots, and forward slashes.'
     );
@@ -63,7 +63,7 @@ async function run() {
   }
 
   logger.debug(`Base branch is ${baseBranch}`);
-  logger.debug(`Head branch is ${targetBranch}`);
+  logger.debug(`Head branch is ${headBranch}`);
   logger.debug(`Working directory is ${workingDir}`);
 
   logger.debug('Checking for package updates');
@@ -89,7 +89,7 @@ async function run() {
     await setupGit();
 
     logger.debug('Committing and pushing package*.json changes');
-    await exec.exec(`git checkout -b ${targetBranch}`, [], {
+    await exec.exec(`git checkout -b ${headBranch}`, [], {
       ...commonExecOpts,
     });
     await exec.exec(`git add package.json package-lock.json`, [], {
@@ -98,7 +98,7 @@ async function run() {
     await exec.exec(`git commit -m "chore: update dependencies`, [], {
       ...commonExecOpts,
     });
-    await exec.exec(`git push -u origin ${targetBranch} --force`, [], {
+    await exec.exec(`git push -u origin ${headBranch} --force`, [], {
       ...commonExecOpts,
     });
 
@@ -106,7 +106,7 @@ async function run() {
     const octokit = github.getOctokit(ghToken);
 
     try {
-      logger.debug(`Creating PR using head branch ${targetBranch}`);
+      logger.debug(`Creating PR using head branch ${headBranch}`);
 
       await octokit.rest.pulls.create({
         owner: github.context.repo.owner,
@@ -114,7 +114,7 @@ async function run() {
         title: `Update NPM dependencies`,
         body: `This pull request updates NPM packages`,
         base: baseBranch,
-        head: targetBranch,
+        head: headBranch,
       });
     } catch (e) {
       logger.error(
